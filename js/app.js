@@ -8,8 +8,11 @@ var redirectUrl = window.location.href.split('?')[0];
 
 if(!token){
     var scope = 'user:act_as'; //user:act_as channel:details:self
+    var state = window.location.search;
+    if (state.charAt(0) === "?")
+        state = state.substring(1);
     var clientId = urlParams.get('clientid');
-    var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
+    var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
     window.location = authUrl;
     // console.log('Auth URL', authUrl);
     // window.setTimeout(function(){
