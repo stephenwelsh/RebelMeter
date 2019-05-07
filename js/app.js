@@ -29,7 +29,7 @@ xhr.onload = function () {
 		// Runs when the request is successful
         console.log(xhr.responseText);
         var data = JSON.parse(xhr.responseText)[0];
-        subscribe(data.id);        
+        subscribe(data.channel.id);
 	} else {
 		// Runs when it's not
 		console.log(xhr.responseText);
@@ -41,6 +41,9 @@ xhr.send();
 var subscribe = function(id){
     ca.subscribe(`channel:${id}:update`, function (data) {
         console.log('Channel update', data);
+    });
+    ca.subscribe(`channel:${id}:skill`, function (data) {
+        console.log('Channel skills', data);
     });
     ca.subscribe(`channel:${id}:patronageUpdate`, function (data) {
         console.log('Channel skill update', data);
