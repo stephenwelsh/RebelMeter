@@ -18,7 +18,8 @@ if(!token){
 }
 console.log('Auth Token', token);
 var options = {
-    authToken: token
+    authToken: token,
+    isBot: true
 };
 
 var ca = new carina.Carina(options).open();
