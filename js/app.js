@@ -32,7 +32,7 @@ xhr.onload = function () {
 	if (xhr.status >= 200 && xhr.status < 300) {
 		// Runs when the request is successful
         console.log(xhr.responseText);
-        var data = JSON.parse(xhr.responseText);
+        var data = JSON.parse(xhr.responseText)[0];
         subscribe(data.id);        
 	} else {
 		// Runs when it's not
