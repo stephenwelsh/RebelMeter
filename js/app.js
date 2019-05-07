@@ -2,7 +2,8 @@
 var urlParams = new URLSearchParams(window.location.search);
 var token = urlParams.get('token');
 var clientId = urlParams.get('clientid');
-var redirectUrl = window.location; //https://stephenwelsh.github.io/RebelMeter/
+
+var redirectUrl = encodeURIComponent(window.location); //https://stephenwelsh.github.io/RebelMeter/
 var scope = 'user:act_as'; //user:act_as channel:details:self
 if(!token){
     var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
