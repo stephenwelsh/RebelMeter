@@ -8,6 +8,9 @@ var scope = 'user:act_as'; //user:act_as channel:details:self
 if(!token){
     var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
     console.log('Auth URL', authUrl);
+    window.setTimeout(function(){
+        window.location = authUrl;
+    }, 5000);
     //window.location = authUrl;
 }
 console.log('Auth Token', token);
