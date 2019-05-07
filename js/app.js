@@ -18,7 +18,7 @@ if(!token){
 }
 console.log('Auth Token', token);
 var options = {
-    queryString:'authorization=Bearer ' + token,
+    queryString: {authorization: 'Bearer ' + token},
     authToken: token,
     isBot: true
 };
