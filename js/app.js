@@ -3,21 +3,16 @@ var urlParams = new URLSearchParams(window.location.search);
 var tokens = window.location.hash.match(/\#(?:access_token)\=([\S\s]*?)\&/);
 var token = tokens && tokens.length > 0 ? tokens[1] : null;
 
-//var redirectUrl = encodeURIComponent(window.location); //https://stephenwelsh.github.io/RebelMeter/
-var redirectUrl = window.location.href.split('?')[0];
+var username = urlParams.get('username') || window.localStorage.getItem('username')|| 'ScottishRebel67';
+if(username) window.localStorage.setItem('username', username);
 
 if(!token){
+    var redirectUrl = window.location.href.split('?')[0];
     var scope = 'user:act_as'; //user:act_as channel:details:self
-    var state = window.location.search;
-    if (state.charAt(0) === "?")
-        state = state.substring(1);
-    var clientId = urlParams.get('clientid');
-    var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
+    var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
+    if(clientId) window.localStorage.setItem('clientId', clientId);
+    var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
     window.location = authUrl;
-    // console.log('Auth URL', authUrl);
-    // window.setTimeout(function(){
-    //     window.location = authUrl;
-    // }, 5000);
 }
 console.log('Auth Token', token);
 var options = {
@@ -27,8 +22,6 @@ var options = {
 };
 
 var ca = new carina.Carina(options).open();
-
-var username = urlParams.get('user') || 'ScottishRebel67';
 
 var xhr = new XMLHttpRequest();
 xhr.onload = function () {
@@ -42,7 +35,7 @@ xhr.onload = function () {
 		console.log(xhr.responseText);
 	}
 };
-xhr.open('GET', 'https://mixer.com/api/v1/users/search?query='+username);
+xhr.open('GET', 'https://mixer.com/api/v1/users/search?query=' + username);
 xhr.send();
 
 var subscribe = function(id){
