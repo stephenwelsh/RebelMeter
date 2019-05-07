@@ -6,8 +6,8 @@ var token = tokens && tokens.length > 0 ? tokens[1] : null;
 //var redirectUrl = encodeURIComponent(window.location); //https://stephenwelsh.github.io/RebelMeter/
 var redirectUrl = window.location.href.split('?')[0];
 
-var scope = 'user:act_as'; //user:act_as channel:details:self
 if(!token){
+    var scope = 'user:act_as'; //user:act_as channel:details:self
     var clientId = urlParams.get('clientid');
     var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
     window.location = authUrl;
@@ -25,12 +25,28 @@ var options = {
 
 var ca = new carina.Carina(options).open();
 
-ca.subscribe('channel:1:update', function (data) {
-    console.log('Channel update', data);
-});
-ca.subscribe('channel:1:patronageUpdate', function (data) {
-    console.log('Channel1 skill update', data);
-});
-ca.subscribe('channel:35122269:patronageUpdate', function (data) {
-    console.log('Rebel skill update', data);
-});
+var username = urlParams.get('user') || 'ScottishRebel67';
+
+var xhr = new XMLHttpRequest();
+xhr.onload = function () {
+	if (xhr.status >= 200 && xhr.status < 300) {
+		// Runs when the request is successful
+        console.log(xhr.responseText);
+        var data = JSON.parse(xhr.responseText);
+        subscribe(data.id);        
+	} else {
+		// Runs when it's not
+		console.log(xhr.responseText);
+	}
+};
+xhr.open('GET', 'https://mixer.com/api/v1/users/search?query='+username);
+xhr.send();
+
+var subscribe = function(id){
+    ca.subscribe(`channel:${id}:update`, function (data) {
+        console.log('Channel update', data);
+    });
+    ca.subscribe(`channel:${id}:patronageUpdate`, function (data) {
+        console.log('Channel skill update', data);
+    });    
+}
