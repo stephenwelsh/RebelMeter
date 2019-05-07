@@ -1,6 +1,6 @@
 
 var urlParams = new URLSearchParams(window.location.search);
-var token = urlParams.get('token');
+var token = window.location.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
 
 //var redirectUrl = encodeURIComponent(window.location); //https://stephenwelsh.github.io/RebelMeter/
 var redirectUrl = window.location.href.split('?')[0];
@@ -9,11 +9,11 @@ var scope = 'user:act_as'; //user:act_as channel:details:self
 if(!token){
     var clientId = urlParams.get('clientid');
     var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
-    console.log('Auth URL', authUrl);
-    window.setTimeout(function(){
-        window.location = authUrl;
-    }, 5000);
-    //window.location = authUrl;
+    window.location = authUrl;
+    // console.log('Auth URL', authUrl);
+    // window.setTimeout(function(){
+    //     window.location = authUrl;
+    // }, 5000);
 }
 console.log('Auth Token', token);
 var options = {
