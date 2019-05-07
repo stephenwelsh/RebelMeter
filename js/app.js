@@ -1,7 +1,7 @@
 
 var urlParams = new URLSearchParams(window.location.search);
 var tokens = window.location.hash.match(/\#(?:access_token)\=([\S\s]*?)\&/);
-var token = tokens ? tokens[0].split('=')[1] : null;
+var token = tokens && tokens.length > 0 ? tokens[1] : null;
 
 //var redirectUrl = encodeURIComponent(window.location); //https://stephenwelsh.github.io/RebelMeter/
 var redirectUrl = window.location.href.split('?')[0];
