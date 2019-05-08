@@ -34,7 +34,7 @@ window.onload = function(){
     }
     console.log('Auth Token', token);
     if(authObj.state){
-        var stateObj = window.atob(decodeURIComponent(authObj.state));
+        var stateObj = JSON.parse(window.atob(decodeURIComponent(authObj.state)));
         username = stateObj.username;
     }
     if(username) {
