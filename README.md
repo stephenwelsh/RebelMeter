@@ -27,3 +27,47 @@ https://stephenwelsh.github.io/RebelMeter?clientid=be6d69301015cb2ed620b23e72ea3
 
 {"id":8,"type":"method","method":"livesubscribe","params":{"events":["channel:456469:skill"]}}
 
+currentMilestoneGroupId: 1
+currentMilestoneId: 4
+< 30000000
+
+Group: 0, Id: 0 = 2395625
+Group: 0, Id: 2 = 10074000
+Group: 0, Id: 3 = 15100710
+Group: 1, Id: 4 = 29000000
+Group: 1, Id: 5 = 33398125
+
+
+currentMilestoneGroupId = 0
+
+
+
+currentMilestoneGroupId = 1
+
+currentMilestoneId:
+
+Group:0
+0 = 5000000
+1 = 10000000
+2 = 15000000
+3 = 20000000
+
+Group:1
+4 = 30000000
+5 = 40000000
+6 = 55000000
+7 = 70000000
+
+Group:2
+8 = 90000000
+9 = 1150000000
+10 = 150000000
+11 = 200000000
+
+
+
+
+
+currentMilestoneGroupId = 2
+
+
