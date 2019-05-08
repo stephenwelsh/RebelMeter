@@ -1,4 +1,4 @@
-
+var ca = null;
 window.onload = function(){
     var urlParams = new URLSearchParams(window.location.search);
     var tokens = window.location.hash.match(/\#(?:access_token)\=([\S\s]*?)\&/);
@@ -27,7 +27,7 @@ window.onload = function(){
         isBot: true
     };
     
-    var ca = new carina.Carina(options).open();
+    ca = new carina.Carina(options).open();
     
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -35,7 +35,7 @@ window.onload = function(){
             // Runs when the request is successful
             console.log(xhr.responseText);
             var data = JSON.parse(xhr.responseText)[0];
-            subscribe(data.channel.id);
+            subscribe(ca, data.channel.id);
         } else {
             // Runs when it's not
             console.log(xhr.responseText);
@@ -44,7 +44,7 @@ window.onload = function(){
     xhr.open('GET', 'https://mixer.com/api/v1/users/search?query=' + username);
     xhr.send();    
 }
-var subscribe = function(id){
+var subscribe = function(ca, id){
     ca.subscribe(`channel:${id}:update`, function (data) {
         console.log('Channel update', data);
     });
