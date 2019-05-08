@@ -4,9 +4,7 @@
 https://stephenwelsh.github.io/RebelMeter?clientid=be6d69301015cb2ed620b23e72ea38bdc1aa34f7cd3e77f5&username=Kabby
 
 
-https://stephenwelsh.github.io/RebelMeter?clientid=be6d69301015cb2ed620b23e72ea38bdc1aa34f7cd3e77f5&username=TexasDogRescuer
-
-
+https://stephenwelsh.github.io/RebelMeter?clientid=be6d69301015cb2ed620b23e72ea38bdc1aa34f7cd3e77f5&username=ThumblessGaGa
 
 
 

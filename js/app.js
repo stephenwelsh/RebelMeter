@@ -91,6 +91,7 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
         }
         this.realtime = MixerRealtime.realtime(token);
         this.channel = MixerChannel.channel(token);
+        
         if($scope.auth.state){
             $scope.state = JSON.parse(window.atob(decodeURIComponent($scope.auth.state)));
             //$scope.username = stateObj.username;
@@ -100,9 +101,11 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
                 // Subscribe to events
                 this.realtime.subscribe(`channel:${$scope.id}:patronageUpdate`, function(data){
                     console.log('Channel Sparks Update: ', data);
+                    $scope.sparks = data;
                 });
-                this.channel.status({id: $scope.id}).$promise.then(function(status){
-                    console.log('Channel Sparks: ', status.patronageEarned);
+                this.channel.status({id: $scope.id}).$promise.then(function(data){
+                    console.log('Channel Sparks: ', data.patronageEarned);
+                    $scope.sparks = data;
                 });
             });
         }

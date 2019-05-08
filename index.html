@@ -11,6 +11,8 @@
             <p>Token: <span>{{auth['#access_token']}}</span></p>
             <p>Username: <span>{{state.username}}</span></p>
             <p>Id: <span>{{user.channel.id}}</span></p>
+            <p>Sparks: <span>{{sparks.patronageEarned}}</span></p>
+            <p>Spark Data: <pre>{{sparks | json}}</pre></p>
             <p>User: <pre>{{user | json}}</pre></p>
         </div>
     </body>
