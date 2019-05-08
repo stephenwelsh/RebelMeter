@@ -1,5 +1,5 @@
 var app = angular.module("app", ['ngResource']);
-app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, MixerRealtime, SparkSteps) {  
+app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerChannel, MixerRealtime, SparkSteps) {  
     $scope.message="Hello World123" ;
     $scope.flashClass = [];
     function init(){
@@ -40,8 +40,10 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
                 min = SparkSteps[$scope.sparks.currentMilestoneId - 1];
             }
             $scope.sparks.percentage = (100 * (newSparks - min))/(max - min);
-            $scope.flashClass.length = 0;;
             $scope.flashClass.push('flash_once');
+            $timeout( function(){
+                $scope.flashClass.length = 0;
+            }, 1000 );
         });
     
         if($scope.auth.state){
