@@ -101,7 +101,9 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
                 // Subscribe to events
                 this.realtime.subscribe(`channel:${$scope.id}:patronageUpdate`, function(data){
                     console.log('Channel Sparks Update: ', data);
-                    $scope.sparks = data;
+                    $scope.$apply(function(){
+                        $scope.sparks = data;
+                    });
                 });
                 this.channel.status({id: $scope.id}).$promise.then(function(data){
                     console.log('Channel Sparks: ', data.patronageEarned);
