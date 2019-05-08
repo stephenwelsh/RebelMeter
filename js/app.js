@@ -103,7 +103,8 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers) {
 app.factory('MixerUsers',function($resource){
     return $resource('https://mixer.com/api/v1/users',null,{
         search:{
-            url: 'https://mixer.com/api/v1/users/search'
+            url: 'https://mixer.com/api/v1/users/search',
+            isArray: true
         }
     });
 });
