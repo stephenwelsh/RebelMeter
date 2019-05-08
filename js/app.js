@@ -32,6 +32,7 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
         this.realtime = MixerRealtime.realtime(token);
         this.channel = MixerChannel.channel(token);
         $scope.$watch('sparks.patronageEarned', function(newSparks, oldSparks){
+            if(!$scope.sparks) return;
             // TODO: Flash brightness/duration based on the difference between new/old?
             var min = 0;
             var max = SparkSteps[$scope.sparks.currentMilestoneId];
@@ -40,7 +41,7 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
             }
             $scope.sparks.percentage = (100 * (newSparks - min))/(max - min);
             $scope.flashClass.length = 0;;
-            $scope.flashClass = ['flash_once'];
+            $scope.flashClass.push('flash_once');
         });
     
         if($scope.auth.state){
