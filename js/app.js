@@ -91,7 +91,7 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers) {
         if($scope.auth.state){
             $scope.state = JSON.parse(window.atob(decodeURIComponent($scope.auth.state)));
             //$scope.username = stateObj.username;
-            MixerUsers.search({ query: $scope.state.username }).then(function(users){
+            MixerUsers.search({ query: $scope.state.username }).$promise.then(function(users){
                 $scope.user = users[0];
                 // Subscribe to events
             });
