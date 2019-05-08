@@ -1,21 +1,27 @@
 var ca = null;
 window.onload = function(){
     var urlParams = new URLSearchParams(window.location.search);
-    var tokens = window.location.hash.match(/\#(?:access_token)\=([\S\s]*?)\&/);
-    var token = tokens && tokens.length > 0 ? tokens[1] : null;
+    var authObj = {};
+    if(window.location.hash){
+        var parts = window.location.hash.split('&');
+        parts.forEach(function(part){
+            var segments = part.split('=');
+            if(segments.length > 1)
+                authObj[segments[0]]= segments[1];
+        });    
+    }
+    var token = authObj['#access_token'];
+
+    // var tokens = window.location.hash.match(/\#(?:access_token)\=([\S\s]*?)\&/);
+    // var token = tokens && tokens.length > 0 ? tokens[1] : null;
     
     var username = urlParams.get('username') || window.localStorage.getItem('username') || 'ScottishRebel67';
-    if(username) {
-        window.localStorage.setItem('username', username);
-        console.log('Write LocalStorage: ', username);
-    }
     
     if(!token){
         var redirectUrl = window.location.href.split('?')[0];
         var scope = 'user:act_as'; //user:act_as channel:details:self
         var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
         if(clientId) window.localStorage.setItem('clientId', clientId);
-        //base64 encode
         var stateObj = {
             username: username,
             clientId: clientId
@@ -27,10 +33,13 @@ window.onload = function(){
         }, 500)
     }
     console.log('Auth Token', token);
-    var state = urlParams.get('state');
-    if(state){
-        var stateObj = window.atob(state);
+    if(authObj.state){
+        var stateObj = window.atob(decodeURIComponent(authObj.state));
         username = stateObj.username;
+    }
+    if(username) {
+        window.localStorage.setItem('username', username);
+        console.log('Write LocalStorage: ', username);
     }
 
     var options = {
