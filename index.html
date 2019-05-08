@@ -8,9 +8,9 @@
         <div ng-app="app" ng-controller="HelloWorldCtrl">
             <h1>{{message}}</h1>
             <p>I'm hosted with GitHub Pages.</p>
-            <p>Token: <span ng-model="auth['#access_token']"></span></p>
-            <p>Username: <span ng-model="state.username"></span></p>
-            <p>Id: <span ng-model="user.channel.id"></span></p>
+            <p>Token: <span>{{auth['#access_token']}}</span></p>
+            <p>Username: <span>{{state.username}}</span></p>
+            <p>Id: <span>{{user.channel.id}}</span></p>
             <p>User: <pre>{{user | json}}</pre></p>
         </div>
     </body>
