@@ -51,14 +51,7 @@ window.onload = function(){
     
     ca = new carina.Carina(options).open();
 
-    var app = angular.module("app", []);
-    app.controller("HelloWorldCtrl", function($scope) {  
-        $scope.message="Hello World123" ;
-        function init(){
-        };
-        init();
-        
-    });
+
 
     
     var xhr = new XMLHttpRequest();
@@ -76,6 +69,16 @@ window.onload = function(){
     xhr.open('GET', 'https://mixer.com/api/v1/users/search?query=' + username);
     xhr.send();    
 }
+
+var app = angular.module("app", []);
+app.controller("HelloWorldCtrl", function($scope) {  
+    $scope.message="Hello World123" ;
+    function init(){
+    };
+    init();
+    
+});
+
 var subscribe = function(ca, id){
     ca.subscribe(`channel:${id}:update`, function (data) {
         console.log('Channel update', data);
