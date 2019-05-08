@@ -3,6 +3,9 @@ window.onload = function(){
     var urlParams = new URLSearchParams(window.location.search);
     var tokens = window.location.hash.match(/\#(?:access_token)\=([\S\s]*?)\&/);
     var token = tokens && tokens.length > 0 ? tokens[1] : null;
+    if(!token){
+        var token = urlParams.get('access_token');
+    }
     console.log('URLParams: ', urlParams.get('username'));
     console.log('Read LocalStorage: ', window.localStorage.getItem('username'));
     
@@ -17,7 +20,7 @@ window.onload = function(){
         var scope = 'user:act_as'; //user:act_as channel:details:self
         var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
         if(clientId) window.localStorage.setItem('clientId', clientId);
-        var authUrl = `https://mixer.com/oauth/authorize?response_mode=fragment&response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
+        var authUrl = `https://mixer.com/oauth/authorize?response_mode=query&response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
         window.setTimeout(function(){
             window.location = authUrl;
         }, 500)
