@@ -55,7 +55,6 @@ window.onload = function(){
     .controller("HelloWorldCtrl", function($scope) {  
         $scope.message="Hello World123" ;
         function init(){
-
         };
         init();
         
