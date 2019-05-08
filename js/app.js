@@ -60,7 +60,7 @@ var ca = null;
 // }
 
 var app = angular.module("app", ['ngResource']);
-app.controller("HelloWorldCtrl", function($scope, MixerUsers) {  
+app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerRealtime) {  
     $scope.message="Hello World123" ;
     function init(){
         var urlParams = new URLSearchParams(window.location.search);
@@ -88,12 +88,21 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers) {
             var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
             window.location = authUrl;
         }
+        this.realtime = MixerRealtime.realtime(token);
+        this.channel = MixerChannel.channel(token);
         if($scope.auth.state){
             $scope.state = JSON.parse(window.atob(decodeURIComponent($scope.auth.state)));
             //$scope.username = stateObj.username;
             MixerUsers.search({ query: $scope.state.username }).$promise.then(function(users){
                 $scope.user = users[0];
+                $scope.id = $scope.user.channel.id;
                 // Subscribe to events
+                this.realtime.subscribe(`channel:${$scope.id}:patronageUpdate`, function(data){
+                    console.log('Channel Sparks Update: ', data);
+                });
+                this.channel.status({id: $scope.id}).$promise.then(function(status){
+                    console.log('Channel Sparks: ', status.patronageEarned);
+                });
             });
         }
     };
@@ -108,9 +117,47 @@ app.factory('MixerUsers',function($resource){
         }
     });
 });
+app.factory('MixerChannel',function($resource){
+    return {
+        channel: function(token){
+            return $resource('https://mixer.com/api/v2/levels/patronage/channels/:id', null, {
+                status:{
+                    url: 'https://mixer.com/api/v2/levels/patronage/channels/:id/status',
+                    headers:{
+                        'Authorization': 'Bearer ' + token
+                    }        
+                }
+            });
+        }
+    };
+});
+app.factory('MixerRealtime', function(){
+    var mixer = {};
+    mixer.realtime= function(token){
+        mixer.service = new carina.Carina({ queryString: {authorization: 'Bearer ' + token}}).open();
+        return mixer;
+    };
+    mixer.subscribe = function(event, callback){
+        mixer.service.subscribe(event, function(data){
+            callback(data, event);
+        });
+    };
+    return mixer;
+});
 // app.factory("MixerRealtime",function(){
 //     var realtime = {};
-//     realtime.init()
+//     realtime.init = function(options){
+//         realtime.options = options || realtime.options;
+//         realtime.service = new carina.Carina(realtime.options).open();
+//     };
+//     realtime.subscribe = function(event, callback){
+//         if(realtime.service)
+//         {
+//             realtime.service.subscribe(event, function(data){
+//                 callback(data, event);
+//             });
+//         }
+//     }
 //     return realtime;
 // });
 
