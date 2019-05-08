@@ -76,6 +76,7 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
         }
         var token = $scope.auth['#access_token'];
         if(!token){
+            var username = urlParams.get('username') || window.localStorage.getItem('username') || 'ScottishRebel67';
             var redirectUrl = window.location.href.split('?')[0];
             var scope = 'user:act_as'; //user:act_as channel:details:self
             var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
