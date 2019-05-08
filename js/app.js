@@ -18,7 +18,9 @@ window.onload = function(){
         var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
         if(clientId) window.localStorage.setItem('clientId', clientId);
         var authUrl = `https://mixer.com/oauth/authorize?response_mode=fragment&response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}`;
-        window.location = authUrl;
+        window.setTimeout(function(){
+            window.location = authUrl;
+        }, 500)
     }
     console.log('Auth Token', token);
     var options = {
