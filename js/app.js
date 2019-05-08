@@ -32,6 +32,7 @@ window.onload = function(){
             window.location = authUrl;
         }, 500)
     }
+
     console.log('Auth Token', token);
     if(authObj.state){
         var stateObj = JSON.parse(window.atob(decodeURIComponent(authObj.state)));
@@ -49,6 +50,17 @@ window.onload = function(){
     };
     
     ca = new carina.Carina(options).open();
+
+    angular.module("app", [])
+    .controller("HelloWorldCtrl", function($scope) {  
+        $scope.message="Hello World123" ;
+        function init(){
+
+        };
+        init();
+        
+    });
+
     
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
