@@ -51,8 +51,8 @@ window.onload = function(){
     
     ca = new carina.Carina(options).open();
 
-    angular.module("app", [])
-    .controller("HelloWorldCtrl", function($scope) {  
+    var app = angular.module("app", []);
+    app.controller("HelloWorldCtrl", function($scope) {  
         $scope.message="Hello World123" ;
         function init(){
         };
