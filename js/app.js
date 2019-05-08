@@ -1,6 +1,7 @@
 var app = angular.module("app", ['ngResource']);
 app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, MixerRealtime, SparkSteps) {  
     $scope.message="Hello World123" ;
+    $scope.flashClass = [];
     function init(){
         var urlParams = new URLSearchParams(window.location.search);
         $scope.auth = {};
@@ -38,7 +39,9 @@ app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, Mixe
                 min = SparkSteps[$scope.sparks.currentMilestoneId - 1];
             }
             $scope.sparks.percentage = (100 * (newSparks - min))/(max - min);
-            });
+            $scope.flashClass.length = 0;;
+            $scope.flashClass = ['flash_once'];
+        });
     
         if($scope.auth.state){
             $scope.state = JSON.parse(window.atob(decodeURIComponent($scope.auth.state)));
