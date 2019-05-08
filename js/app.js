@@ -60,7 +60,7 @@ var ca = null;
 // }
 
 var app = angular.module("app", ['ngResource']);
-app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerRealtime) {  
+app.controller("HelloWorldCtrl", function($scope, MixerUsers, MixerChannel, MixerRealtime) {  
     $scope.message="Hello World123" ;
     function init(){
         var urlParams = new URLSearchParams(window.location.search);
