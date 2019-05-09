@@ -50,7 +50,7 @@
     margin: -24px 0px 0px 0px;
     background-size: 64px 64px;
     background-repeat: no-repeat;
-    background-image: url("img/RebelHat.png");
+    background-image: url("../img/RebelHat.png");
 }
 
 .hat.shake {
