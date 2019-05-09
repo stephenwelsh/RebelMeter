@@ -2,10 +2,10 @@ var app = angular.module("app", ['ngResource']);
 app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerChannel, MixerRealtime, SparkSteps) {  
     $scope.message="Hello World123" ;
     $scope.flashClass = [];
-    $scope.items = [1,2,3,4,5,6,7];
+    $scope.items = [];
     $scope.shakeAmount = 0;
     $scope.shake = function(amount){
-        $scope.shakeAmount = amount;
+        $scope.shakeAmount = Math.max(1, $scope.items.length * amount/100);
         $timeout(shakeTimer, 830);
     };
     var shakeTimer = function() {
@@ -14,7 +14,16 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
     $scope.getShake = function(index){
         return index < $scope.shakeAmount ? "shake" :"";
     };
-
+    $scope.setHats = function(amount){
+        var hats = Math.max(1, Math.round(10 * amount/100));
+        var index = 1;
+        if(hats != $scope.items.length){
+            $scope.items.length = 0;
+            for(var i = 0; i < hats; i++){
+                $scope.items.push(index++);
+            }
+        }
+    };
 
     function init(){
         var urlParams = new URLSearchParams(window.location.search);
@@ -55,7 +64,10 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             }
             $scope.sparks.percentage = (100 * (newSparks - min))/(max - min);
             $scope.flashClass.push('flash_once');
-            $scope.shake(Math.random() * $scope.items.length);
+            $scope.setHats($scope.sparks.percentage);
+            var delta = newSparks - oldSparks;
+            $scope.shake(delta/5000*100);
+            //$scope.shake(Math.random() * $scope.items.length);
             $timeout( function(){
                 $scope.flashClass.length = 0;
             }, 1000 );
