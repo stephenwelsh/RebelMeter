@@ -14,6 +14,12 @@
             <p>Id: <span>{{user.channel.id}}</span></p>
             <p>Sparks: <span>{{sparks.patronageEarned}}</span></p>
             <p>Sparks Percentage: <span ng-class="flashClass" >{{sparks.percentage}}</span></p>
+            <div class="hats sparkgrad0">
+                <div ng-repeat="item in items">
+                    <div class="hat" ng-class="getShake($index)">
+                    </div>        
+                </div>
+            </div>          
             <p>Spark Data: <pre>{{sparks | json}}</pre></p>
             <p>User: <pre>{{user | json}}</pre></p>
         </div>

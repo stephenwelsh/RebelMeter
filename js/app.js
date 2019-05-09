@@ -2,6 +2,20 @@ var app = angular.module("app", ['ngResource']);
 app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerChannel, MixerRealtime, SparkSteps) {  
     $scope.message="Hello World123" ;
     $scope.flashClass = [];
+    $scope.items = [1,2,3,4,5,6,7];
+    $scope.shakeAmount = 0;
+    $scope.shake = function(amount){
+        $scope.shakeAmount = amount;
+        $timeout(shakeTimer, 830);
+    };
+    var shakeTimer = function() {
+        $scope.shakeAmount = 0;
+    }
+    $scope.getShake = function(index){
+        return index < $scope.shakeAmount ? "shake" :"";
+    };
+
+
     function init(){
         var urlParams = new URLSearchParams(window.location.search);
         $scope.auth = {};
@@ -41,6 +55,7 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             }
             $scope.sparks.percentage = (100 * (newSparks - min))/(max - min);
             $scope.flashClass.push('flash_once');
+            $scope.shake(Math.random() * $scope.items.length);
             $timeout( function(){
                 $scope.flashClass.length = 0;
             }, 1000 );

@@ -20,3 +20,64 @@
     -webkit-animation-iteration-count: 1;
     -webkit-animation-timing-function: ease-in-out;
 }
+
+.sparkgrad0 {
+    background-image: linear-gradient(rgb(196, 240, 253), rgb(24, 121, 229));
+}
+
+.sparkgrad1 {
+    background-image: linear-gradient(rgb(54, 208, 251), rgb(24, 121, 229));
+}
+
+.sparkgrad2 {
+    background-image: linear-gradient(rgb(54, 208, 251), rgb(24, 121, 229));
+}
+
+.hats {
+    position: absolute;
+    left: 50%;
+    height: 420px;
+    width: 64px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.hat {
+    height: 64px;
+    width: 64px;
+    margin: -24px 0px 0px 0px;
+    background-size: 64px 64px;
+    background-repeat: no-repeat;
+    background-image: url("img/RebelHat.png");
+}
+
+.hat.shake {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0) scale(1.2, 1.2);
+    }
+  
+    20%, 80% {
+      transform: translate3d(2px, 0, 0) scale(1.4, 1.4);
+    }
+  
+    30%, 70% {
+      transform: translate3d(-4px, 0, 0) scale(1.6, 1.6);
+    }
+  
+    50% {
+      transform: translate3d(-4px, 0, 0) scale(2.0, 2.0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0) scale(1.8, 1.8);
+    }
+  }
