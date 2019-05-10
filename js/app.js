@@ -35,23 +35,52 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
                 var segments = part.split('=');
                 if(segments.length > 1)
                     $scope.auth[segments[0]]= segments[1];
-            });    
+            });
+            $scope.state = JSON.parse(window.atob(decodeURIComponent($scope.auth['state'])));
         }
-        var token = $scope.auth['#access_token'];
-        if(!token){
-            var username = urlParams.get('username') || window.localStorage.getItem('username') || 'ScottishRebel67';
+        var username = $scope.state.username || urlParams.get('username') || window.localStorage.getItem('username') || 'ScottishRebel67';
+        var clientid = $scope.state.clientid || urlParams.get('clientid') || window.localStorage.getItem('clientid');
+        var token = $scope.auth['#access_token'] || urlParams.get('token') || window.localStorage.getItem('token');
+        var expires = $scope.auth['expires_in'] || urlParams.get('expires') || window.localStorage.getItem('expires');
+        if(!window.location.hash && username && clientid){
+            window.localStorage.setItem('clientid', clientid);
+            window.localStorage.setItem('username', username);
+            $scope.state.clientid = clientid;
+            $scope.state.username = username;
+        }
+        if(!token && clientid){
             var redirectUrl = window.location.href.split('?')[0];
             var scope = 'user:act_as'; //user:act_as channel:details:self
-            var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
-            if(clientId) window.localStorage.setItem('clientId', clientId);
-            var stateObj = {
+            var state = window.btoa(JSON.stringify({
                 username: username,
                 clientId: clientId
-            };
-            var state = window.btoa(JSON.stringify(stateObj));
-            var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
-            window.location = authUrl;
+            }));
+            window.location = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
         }
+        else if($scope.auth['#access_token'] && $scope.auth['state']){
+            window.location = window.location.href.split('?')[0] + `?token=${token}&expires=${expires}&username${username}`;
+        }
+        else if(!token){
+            window.alert('You must provide a clientid!');
+            return;
+        }
+        if(token) window.localStorage.setItem('token', token);
+        if(expires) window.localStorage.setItem('expires', expires);
+
+        // if(!token){
+        //     var username = urlParams.get('username') || window.localStorage.getItem('username') || 'ScottishRebel67';
+        //     var redirectUrl = window.location.href.split('?')[0];
+        //     var scope = 'user:act_as'; //user:act_as channel:details:self
+        //     var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
+        //     if(clientId) window.localStorage.setItem('clientId', clientId);
+        //     var stateObj = {
+        //         username: username,
+        //         clientId: clientId
+        //     };
+        //     var state = window.btoa(JSON.stringify(stateObj));
+        //     var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
+        //     window.location = authUrl;
+        // }
         this.realtime = MixerRealtime.realtime(token);
         this.channel = MixerChannel.channel(token);
         $scope.$watch('sparks.patronageEarned', function(newSparks, oldSparks){
@@ -72,26 +101,21 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
                 $scope.flashClass.length = 0;
             }, 1000 );
         });
-    
-        if($scope.auth.state){
-            $scope.state = JSON.parse(window.atob(decodeURIComponent($scope.auth.state)));
-            //$scope.username = stateObj.username;
-            MixerUsers.search({ query: $scope.state.username }).$promise.then(function(users){
-                $scope.user = users[0];
-                $scope.id = $scope.user.channel.id;
-                // Subscribe to events
-                this.realtime.subscribe(`channel:${$scope.id}:patronageUpdate`, function(data){
-                    console.log('Channel Sparks Update: ', data);
-                    $scope.$apply(function(){
-                        $scope.sparks = data;
-                    });
-                });
-                this.channel.status({id: $scope.id}).$promise.then(function(data){
-                    console.log('Channel Sparks: ', data.patronageEarned);
+        MixerUsers.search({ query: $scope.state.username }).$promise.then(function(users){
+            $scope.user = users[0];
+            $scope.id = $scope.user.channel.id;
+            // Subscribe to events
+            this.realtime.subscribe(`channel:${$scope.id}:patronageUpdate`, function(data){
+                console.log('Channel Sparks Update: ', data);
+                $scope.$apply(function(){
                     $scope.sparks = data;
                 });
             });
-        }
+            this.channel.status({id: $scope.id}).$promise.then(function(data){
+                console.log('Channel Sparks: ', data.patronageEarned);
+                $scope.sparks = data;
+            });
+        });
     };
     init();
 });
