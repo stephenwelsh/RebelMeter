@@ -53,9 +53,9 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             var scope = 'user:act_as'; //user:act_as channel:details:self
             var state = window.btoa(JSON.stringify({
                 username: username,
-                clientId: clientId
+                clientid: clientid
             }));
-            window.location = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
+            window.location = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientid}&state=${state}`;
         }
         else if($scope.auth['#access_token'] && $scope.auth['state']){
             window.location = window.location.href.split('?')[0] + `?token=${token}&expires=${expires}&username${username}`;
