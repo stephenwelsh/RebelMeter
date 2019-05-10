@@ -24,17 +24,19 @@
 .sparkgrad0 {
     background-image: linear-gradient(rgb(196, 240, 253), rgb(24, 121, 229));
 }
-
+  
 .sparkgrad1 {
-    background-image: linear-gradient(rgb(54, 208, 251), rgb(24, 121, 229));
+    background-image: linear-gradient(rgb(241, 175, 248), rgb(148, 34, 223));
+}
+  
+.sparkgrad2 {
+    background-image: linear-gradient(rgb(239, 184, 202), rgb(247, 58, 98));
 }
 
-.sparkgrad2 {
-    background-image: linear-gradient(rgb(54, 208, 251), rgb(24, 121, 229));
-}
 div.hide {
     display: none;
 }
+
 div.verticalText {
     border-radius: 20px;
     position: absolute;
