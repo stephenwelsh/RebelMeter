@@ -32,9 +32,13 @@
 .sparkgrad2 {
     background-image: linear-gradient(rgb(54, 208, 251), rgb(24, 121, 229));
 }
+div.hide {
+    display: none;
+}
 
 .hats {
     position: absolute;
+    margin-left: -32px;
     left: 50%;
     height: 420px;
     width: 64px;
