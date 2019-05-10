@@ -58,7 +58,7 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             window.location = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientid}&state=${state}`;
         }
         else if($scope.auth['#access_token'] && $scope.auth['state']){
-            window.location = window.location.href.split('?')[0] + `?token=${token}&expires=${expires}&username${username}`;
+            window.location = window.location.href.split('?')[0] + `?token=${token}&expires=${expires}&username=${username}`;
         }
         else if(!token){
             window.alert('You must provide a clientid!');
