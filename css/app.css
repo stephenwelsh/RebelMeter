@@ -35,6 +35,20 @@
 div.hide {
     display: none;
 }
+div.verticalText {
+    border-radius: 20px;
+    position: absolute;
+    color: white;
+    font-size: 50px;
+    font-family: "Industrywf",sans-serif;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: -1;
+    writing-mode: vertical-rl;
+  }
 
 .hats {
     position: absolute;
