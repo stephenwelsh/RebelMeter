@@ -32,6 +32,7 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
     $scope.save = function(){
         //if($$scope.state.username)
         $scope.init();
+        $scope.showForm = false;
     }
 
     $scope.init = function(){
@@ -67,7 +68,6 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
         }
         else if($scope.auth['#access_token'] && $scope.auth['state']){
             window.location = window.location.origin + window.location.pathname + `?token=${token}&expires=${expires}&username=${username}`;
-            // window.location = window.location.href.split('?')[0] + `?token=${token}&expires=${expires}&username=${username}`;
         }
         else if(!token){
             $scope.showForm = true;
