@@ -96,13 +96,13 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             $scope.user = users[0];
             $scope.id = $scope.user.channel.id;
             // Subscribe to events
-            this.realtime.subscribe(`channel:${$scope.id}:patronageUpdate`, function(data){
+            realtime.subscribe(`channel:${$scope.id}:patronageUpdate`, function(data){
                 console.log('Channel Sparks Update: ', data);
                 $scope.$apply(function(){
                     $scope.sparks = data;
                 });
             });
-            this.channel.status({id: $scope.id}).$promise.then(function(data){
+            channel.status({id: $scope.id}).$promise.then(function(data){
                 console.log('Channel Sparks: ', data.patronageEarned);
                 $scope.sparks = data;
             });
