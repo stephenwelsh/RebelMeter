@@ -27,6 +27,9 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
 
     $scope.init = function(){
         var urlParams = new URLSearchParams(window.location.search);
+        var realtime = null;
+        var channel = null;
+
         $scope.auth = {};
         $scope.state = {};
         $scope.showForm = false;
@@ -69,22 +72,8 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
         if(token) window.localStorage.setItem('token', token);
         if(expires) window.localStorage.setItem('expires', expires);
 
-        // if(!token){
-        //     var username = urlParams.get('username') || window.localStorage.getItem('username') || 'ScottishRebel67';
-        //     var redirectUrl = window.location.href.split('?')[0];
-        //     var scope = 'user:act_as'; //user:act_as channel:details:self
-        //     var clientId = urlParams.get('clientid') || window.localStorage.getItem('clientId');
-        //     if(clientId) window.localStorage.setItem('clientId', clientId);
-        //     var stateObj = {
-        //         username: username,
-        //         clientId: clientId
-        //     };
-        //     var state = window.btoa(JSON.stringify(stateObj));
-        //     var authUrl = `https://mixer.com/oauth/authorize?response_type=token&redirect_uri=${redirectUrl}&scope=${scope}&client_id=${clientId}&state=${state}`;
-        //     window.location = authUrl;
-        // }
-        this.realtime = MixerRealtime.realtime(token);
-        this.channel = MixerChannel.channel(token);
+        realtime = MixerRealtime.realtime(token);
+        channel = MixerChannel.channel(token);
         $scope.$watch('sparks.patronageEarned', function(newSparks, oldSparks){
             if(!$scope.sparks) return;
             // TODO: Flash brightness/duration based on the difference between new/old?
