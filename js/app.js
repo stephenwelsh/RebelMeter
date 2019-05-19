@@ -25,7 +25,7 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
         }
     };
 
-    function init(){
+    $scope.init = function(){
         var urlParams = new URLSearchParams(window.location.search);
         $scope.auth = {};
         $scope.state = {};
@@ -119,7 +119,7 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             });
         });
     };
-    init();
+    $scope.init();
 });
 app.factory('MixerUsers',function($resource){
     return $resource('https://mixer.com/api/v1/users',null,{
