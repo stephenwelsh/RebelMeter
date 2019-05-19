@@ -37,7 +37,8 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
     $scope.init = function(){
         var urlParams = new URLSearchParams(window.location.search);
         if(window.location.hash){
-            var parts = window.location.hash.split('&');
+            var hashParts = window.location.hash.split('?');
+            var parts = hashParts[0].split('&');
             parts.forEach(function(part){
                 var segments = part.split('=');
                 if(segments.length > 1)
