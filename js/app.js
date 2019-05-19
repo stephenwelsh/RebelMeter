@@ -29,6 +29,7 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
         var urlParams = new URLSearchParams(window.location.search);
         $scope.auth = {};
         $scope.state = {};
+        $scope.showForm = false;
         if(window.location.hash){
             var parts = window.location.hash.split('&');
             parts.forEach(function(part){
@@ -61,7 +62,8 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             window.location = window.location.href.split('?')[0] + `?token=${token}&expires=${expires}&username=${username}`;
         }
         else if(!token){
-            window.alert('You must provide a clientid!');
+            $scope.showForm = true;
+            window.alert('You must provide a valid clientid!');
             return;
         }
         if(token) window.localStorage.setItem('token', token);

@@ -52,6 +52,12 @@ div.verticalText {
     writing-mode: vertical-rl;
   }
 
+.hatsContainer {
+  position: relative;
+  height: 420px;
+  width: 64px;
+}
+
 .hats {
     position: absolute;
     margin-left: -32px;
