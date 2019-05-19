@@ -4,6 +4,11 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
     $scope.flashClass = [];
     $scope.items = [];
     $scope.shakeAmount = 0;
+    var realtime = null;
+    var channel = null;
+    $scope.auth = {};
+    $scope.state = {};
+    $scope.showForm = false;
     $scope.shake = function(amount){
         $scope.shakeAmount = Math.max(1, $scope.items.length * amount/100);
         $timeout(shakeTimer, 830);
@@ -24,15 +29,13 @@ app.controller("HelloWorldCtrl", function($scope, $timeout, MixerUsers, MixerCha
             }
         }
     };
+    $scope.save = function(){
+        //if($$scope.state.username)
+        $scope.init();
+    }
 
     $scope.init = function(){
         var urlParams = new URLSearchParams(window.location.search);
-        var realtime = null;
-        var channel = null;
-
-        $scope.auth = {};
-        $scope.state = {};
-        $scope.showForm = false;
         if(window.location.hash){
             var parts = window.location.hash.split('&');
             parts.forEach(function(part){
